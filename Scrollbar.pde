@@ -139,18 +139,23 @@ class HScrollbar
       switch(idx) {
         case 0: 
           fader = "/1/fader1";
+          v_fader1 = map(newspos, 0, 50, 0, 1);
           break;
         case 1: 
           fader = "/1/fader2";
+          v_fader2 = map(newspos, 0, 50, 0, 1);
           break;
         case 2: 
           fader = "/1/fader3";
+          v_fader3 = map(newspos, 0, 50, 0, 1);
           break;
         case 3: 
           fader = "/1/fader4";
+          v_fader4 = map(newspos, 0, 50, 0, 1);
           break;
         case 4: 
           fader = "/1/fader5";
+          v_fader5 = map(newspos, 0, 50, 0, 1);
           break;
       }
       
