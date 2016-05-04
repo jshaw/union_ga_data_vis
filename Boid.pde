@@ -22,12 +22,15 @@ class Boid {
   PVector vel;
   PVector acc;
   float r;
+  int size;
 
-  Boid(float x, float y) {
+  // canvas x, y, boid size
+  Boid(float x, float y, int s) {
     acc = new PVector(0,0);
     vel = new PVector(random(-1,1),random(-1,1));
     loc = new PVector(x,y);
     r = 2.0;
+    size = s;
   }
 
   void run(ArrayList<Boid> boids) {
@@ -98,9 +101,14 @@ class Boid {
     //vertex(0, -r*2);
     //vertex(-r, r*2);
     //vertex(r, r*2);
-    vertex(0*4, -r*4);
-    vertex(-r, r*4);
-    vertex(r*4, r*4);
+    //vertex(0*4, -r*4);
+    //vertex(-r, r*4);
+    //vertex(r*4, r*4);
+    
+    vertex(0 * map(size, 1, 971, 4, 10), -r * map(size, 1, 971, 4, 10));
+    vertex(-r, r * map(size, 1, 971, 4, 10));
+    vertex(r * map(size, 1, 971, 4, 10), r * map(size, 1, 971, 4, 10));
+    
     endShape();
     popMatrix();
   }

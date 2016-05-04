@@ -16,6 +16,9 @@ PVector center;
 boolean showvalues = true;
 boolean scrollbar = false;
 
+int max_page_views = 0;
+int max_u_page_views = 0;
+
 
 void setup() {
   frameRate(30);
@@ -28,6 +31,8 @@ void setup() {
 
   println(table.getRowCount() + " total rows in table"); 
 
+  flock = new Flock();
+
   for (TableRow row : table.rows()) {
     
     String page = row.getString("Page");
@@ -36,32 +41,29 @@ void setup() {
     
     println(page);
     println( page_views + " page views / " + unique_page_views + " unique page views" );
+    
+    if(int(page_views) >= max_page_views ){
+      max_page_views = page_views;
+    }
+    
+    if(int(unique_page_views) >= max_u_page_views ){
+      max_u_page_views = unique_page_views;
+    }
+    
+    flock.addBoid(new Boid(random(0,width),random(0,height),int(unique_page_views)));
   }
   
+  println( max_page_views + " max_page_views / " + max_u_page_views + " max_u_page_views" );
   
-  
-  flock = new Flock();
+  //flock = new Flock();
   // Add an initial set of boids into the system
   
-  for (int i = 0; i < table.getRowCount(); i++) {
-  //for (int i = 0; i < 500; i++) {
-    //flock.addBoid(new Boid(width/2,height/2));
-    flock.addBoid(new Boid(random(0,width),random(0,height)));
-  }
+  //for (int i = 0; i < table.getRowCount(); i++) {
+  ////for (int i = 0; i < 500; i++) {
+  //  //flock.addBoid(new Boid(width/2,height/2));
+  //  flock.addBoid(new Boid(random(0,width),random(0,height),int(unique_page_views)));
+  //}
   smooth();
-  
-  table = loadTable("ga_demo_sm.csv", "header");
-
-  println(table.getRowCount() + " total rows in table"); 
-
-  for (TableRow row : table.rows()) {
-    
-    int page = row.getInt("Page");
-    String page_views = row.getString("Page Views");
-    String unique_page_views = row.getString("Unique Page Views");
-    
-    println(page + " (" + unique_page_views + ") has an ID of " + page_views);
-  }
 }
 
 
@@ -72,7 +74,7 @@ void draw() {
   drawScrollbars();
 
   if (mousePressed && !scrollbar) {
-    flock.addBoid(new Boid(mouseX,mouseY));
+    flock.addBoid(new Boid(mouseX,mouseY,4));
   }
 
 
