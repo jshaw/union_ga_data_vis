@@ -161,8 +161,10 @@ class HScrollbar
       
       OscMessage myMessage = new OscMessage(fader);
       float moving = map(newspos, 0, 50, 0, 1);
-      print("***MOVING SHIT: ");
-      println(moving);
+
+      //print("***MOVING SHIT: ");
+      //println(moving);
+      
       myMessage.add(moving); /* add an int to the osc message */
       
       /* send the message */
@@ -188,8 +190,9 @@ class HScrollbar
           break;
       }
       
-      println(whichFader);
-      println(int(whichFader));
+      // println(whichFader);
+      // println(int(whichFader));
+      
       newspos = constrain(int(map(whichFader, 0, 1, 0, 50)), sposMin, sposMax);
       
     }
@@ -198,7 +201,8 @@ class HScrollbar
       spos = spos + (newspos-spos)/loose;
     }
     
-    println("================================");
+    //println("================================");
+    
   }
 
   int constrain(int val, int minv, int maxv) {
