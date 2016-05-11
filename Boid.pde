@@ -22,17 +22,22 @@ class Boid {
   PVector vel;
   PVector acc;
   float r;
-  int page_view;
-  int unique_page_view;
+  float max_page_view;
+  float page_view;
+  float unique_page_view;
 
   // canvas x, y, boid size
-  Boid(float x, float y, int pv, int upv) {
+  Boid(float x, float y, float mpv, float pv, float upv) {
     acc = new PVector(0,0);
     vel = new PVector(random(-1,1),random(-1,1));
     loc = new PVector(x,y);
     r = 2.0;
     page_view = pv;
     unique_page_view = upv;
+    max_page_view = mpv;
+    
+    println(page_view);
+    println(unique_page_view);
   }
 
   void run(ArrayList<Boid> boids) {
@@ -66,7 +71,7 @@ class Boid {
   void update() {
     // Update velocity
     vel.add(acc);
-    // Limit speed
+    // Limit 
     vel.limit(maxspeed);
     loc.add(vel);
     // Reset accelertion to 0 each cycle
@@ -89,31 +94,48 @@ class Boid {
   }
   
   void render() {
+    
     // Draw a triangle rotated in the direction of velocity
     float theta = vel.heading2D() + radians(90);
     //fill(175);
     
     //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
-    ////stroke(0);
+    //stroke(0);
     //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
     
-    colorMode(HSB, 100);
+    //colorMode(HSB, 100);
     //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
     //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
     
     // map(min / max, 0, 1, 0, 255)
-    if(unique_page_view == 0){
-      unique_page_view = 1;
-    }
+    //if(unique_page_view == 0){
+    //  unique_page_view = 1;
+    //}
     
-    if(page_view == 0){
-      page_view = 1;
-    }
+    //if(page_view == 0){
+    //  page_view = 1;
+    //}
     
-    fill(map((unique_page_view / page_view), 0, 1, 0, 100), map(loc.x, 0, width, 0, 100), map(loc.y, 0, height, 0, 100));
+    println("=============");
+    //println(page_view);
+    //println(unique_page_view);
+    println(unique_page_view / page_view);
+    println(map((unique_page_view / page_view), 0, 1, 0, 100));
+    println("=============");
     
-    fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
-    stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    //fill(map((unique_page_view / page_view), 0, 1, 0, 100), map(loc.x, 0, width, 0, 100), map(loc.y, 0, height, 0, 100));
+    //fill(map((unique_page_view / page_view), 0, 1, 0, 100), 100, 100);
+   
+    //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), map((unique_page_view / page_view), 0, 1, 1, 100));
+    
+    //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    
+    //stroke(map((unique_page_view / page_view), 0, 1, 0, 100), 100, 100);
+    //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), map((unique_page_view / page_view), 0, 1, 1, 100));
+    
+    fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175, map((unique_page_view / page_view), 0, 1, 1, 255));
+    stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175, map((unique_page_view / page_view), 0, 1, 1, 255));
     
     pushMatrix();
     translate(loc.x,loc.y);
@@ -122,15 +144,20 @@ class Boid {
     //vertex(0, -r*2);
     //vertex(-r, r*2);
     //vertex(r, r*2);
+    
     //vertex(0*4, -r*4);
     //vertex(-r, r*4);
     //vertex(r*4, r*4);
     
-    vertex(0 * map(page_view, 1, 971, 4, 10), -r * map(page_view, 1, 971, 4, 10));
-    vertex(-r, r * map(page_view, 1, 971, 4, 10));
-    vertex(r * map(page_view, 1, 971, 4, 10), r * map(page_view, 1, 971, 4, 10));
+    vertex(0*map((page_view), 0, (int)max_page_view, 3, 10), -r*map((page_view), 0, (int)max_page_view, 3, 10));
+    vertex(-r, r*map((page_view), 0, (int)max_page_view, 3, 10));
+    vertex(r*map((page_view), 0, (int)max_page_view, 3, 10), r*map((page_view), 0, (int)max_page_view, 3, 10));
     
-    colorMode(RGB, 100);
+    //vertex(0 * map(page_view, 1, 971, 4, 10), -r * map(page_view, 1, 971, 4, 10));
+    //vertex(-r, r * map(page_view, 1, 971, 4, 10));
+    //vertex(r * map(page_view, 1, 971, 4, 10), r * map(page_view, 1, 971, 4, 10));
+    
+    //colorMode(RGB, 100);
     
     endShape();
     popMatrix();

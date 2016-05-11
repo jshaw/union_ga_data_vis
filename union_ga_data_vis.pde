@@ -50,7 +50,21 @@ void setup() {
       max_u_page_views = unique_page_views;
     }
     
-    flock.addBoid(new Boid(random(0,width),random(0,height), int(page_views), int(unique_page_views)));
+    println(page);
+    println( page_views + " page views / " + unique_page_views + " unique page views" );
+    
+    if(page_views > 0){
+      println( (float)unique_page_views / (float)page_views );
+    }
+    
+    println("============================");
+    
+    if(page_views > 0){
+     println(unique_page_views / page_views);
+     flock.addBoid(new Boid(random(0,width),random(0,height), (float)max_u_page_views, (float)page_views, (float)unique_page_views));
+    }
+    
+    
   }
   
   println( max_page_views + " max_page_views / " + max_u_page_views + " max_u_page_views" );
@@ -74,7 +88,7 @@ void draw() {
   drawScrollbars();
 
   if (mousePressed && !scrollbar) {
-    flock.addBoid(new Boid(mouseX,mouseY, 1, 1));
+    flock.addBoid(new Boid(mouseX,mouseY, 1, 1, 1));
   }
 
 
