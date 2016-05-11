@@ -1,14 +1,19 @@
-// The Nature of Code
-// Daniel Shiffman
-// http://natureofcode.com
-
-
-// Flocking
-// Demonstration of Craig Reynolds' "Flocking" behavior
+//
+// UNION Creative / http://unioncreative.com 
+// Data Viz Project; data supplied through GA traffic, browsing behaviour + events
+// By: Jordan Shaw
+// 
+// =========== 
+// 
+// Flocking inspiration from Daniel Shiffman + http://natureofcode.com
+//
+// ===========
+//
+// Flocking Demonstration of Craig Reynolds' "Flocking" behavior
 // See: http://www.red3d.com/cwr/
 // Rules: Cohesion, Separation, Alignment
 
-// Click mouse to add boids into the system
+
 Flock flock;
 Table table;
 PVector center;
@@ -18,7 +23,6 @@ boolean scrollbar = false;
 
 int max_page_views = 0;
 int max_u_page_views = 0;
-
 
 void setup() {
   frameRate(30);
@@ -50,33 +54,21 @@ void setup() {
       max_u_page_views = unique_page_views;
     }
     
-    println(page);
-    println( page_views + " page views / " + unique_page_views + " unique page views" );
-    
     if(page_views > 0){
       println( (float)unique_page_views / (float)page_views );
     }
     
-    println("============================");
+    println("*************************");
     
     if(page_views > 0){
      println(unique_page_views / page_views);
      flock.addBoid(new Boid(random(0,width),random(0,height), (float)max_u_page_views, (float)page_views, (float)unique_page_views));
     }
-    
-    
+      
   }
   
   println( max_page_views + " max_page_views / " + max_u_page_views + " max_u_page_views" );
   
-  //flock = new Flock();
-  // Add an initial set of boids into the system
-  
-  //for (int i = 0; i < table.getRowCount(); i++) {
-  ////for (int i = 0; i < 500; i++) {
-  //  //flock.addBoid(new Boid(width/2,height/2));
-  //  flock.addBoid(new Boid(random(0,width),random(0,height),int(unique_page_views)));
-  //}
   smooth();
 }
 

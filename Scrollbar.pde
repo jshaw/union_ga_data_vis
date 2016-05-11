@@ -1,8 +1,17 @@
+//
+// UNION Creative / http://unioncreative.com 
+// Data Viz Project; data supplied through GA traffic, browsing behaviour + events
+// By: Jordan Shaw
+// Added OSC integration w/ TouchOSC
+// 
+// =========== 
+//
+// Inspired by: 
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
-
 // Code based on "Scrollbar" by Casey Reas
+// 
 
 import oscP5.*;
 import netP5.*;
@@ -161,9 +170,6 @@ class HScrollbar
       
       OscMessage myMessage = new OscMessage(fader);
       float moving = map(newspos, 0, 50, 0, 1);
-
-      //print("***MOVING SHIT: ");
-      //println(moving);
       
       myMessage.add(moving); /* add an int to the osc message */
       
@@ -190,9 +196,6 @@ class HScrollbar
           break;
       }
       
-      // println(whichFader);
-      // println(int(whichFader));
-      
       newspos = constrain(int(map(whichFader, 0, 1, 0, 50)), sposMin, sposMax);
       
     }
@@ -200,8 +203,6 @@ class HScrollbar
     if(abs(newspos - spos) > 0) {
       spos = spos + (newspos-spos)/loose;
     }
-    
-    //println("================================");
     
   }
 
@@ -232,7 +233,9 @@ class HScrollbar
     }
     rect(spos, ypos, sheight, sheight);
     
-    
+    // OSC Implementation
+    // More for debugging + testing
+    // ============================
     //if(needsRedraw == true){
     //  //background(0);
     //  // fader5 + toggle 1-4 outlines

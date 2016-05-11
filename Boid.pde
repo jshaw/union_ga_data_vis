@@ -1,20 +1,21 @@
-// The Nature of Code
-// Daniel Shiffman
+//
+// UNION Creative / http://unioncreative.com 
+// Data Viz Project; data supplied through GA traffic, browsing behaviour + events
+// By: Jordan Shaw
+// 
+// =========================
+// 
+// Inspired by...
+// The Nature of Code + Flocking
+// Daniel Shiffman <http://www.shiffman.net>
 // http://natureofcode.com
+// 
 
 float swt = 25.0;     //sep.mult(25.0f);
 float awt = 4.0;      //ali.mult(4.0f);
 float cwt = 5.0;      //coh.mult(5.0f);
 float maxspeed = 1;
 float maxforce = 0.025;
-
-
-// Flocking
-// Daniel Shiffman <http://www.shiffman.net>
-// The Nature of Code, Spring 2009
-
-// Boid class
-// Methods for Separation, Cohesion, Alignment added
 
 class Boid {
 
@@ -26,7 +27,7 @@ class Boid {
   float page_view;
   float unique_page_view;
 
-  // canvas x, y, boid size
+  // canvas x, y, max page view, page view, unique page view
   Boid(float x, float y, float mpv, float pv, float upv) {
     acc = new PVector(0,0);
     vel = new PVector(random(-1,1),random(-1,1));
@@ -97,32 +98,24 @@ class Boid {
     
     // Draw a triangle rotated in the direction of velocity
     float theta = vel.heading2D() + radians(90);
-    //fill(175);
-    
-    //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
-    //stroke(0);
-    //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
-    
     //colorMode(HSB, 100);
+    
+    // Playing around with HSB colour mode
+    // =====================
     //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
     //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
     
-    // map(min / max, 0, 1, 0, 255)
-    //if(unique_page_view == 0){
-    //  unique_page_view = 1;
-    //}
-    
-    //if(page_view == 0){
-    //  page_view = 1;
-    //}
+    //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
     
     println("=============");
-    //println(page_view);
-    //println(unique_page_view);
     println(unique_page_view / page_view);
     println(map((unique_page_view / page_view), 0, 1, 0, 100));
     println("=============");
     
+    
+    // Testing
+    // =======
     //fill(map((unique_page_view / page_view), 0, 1, 0, 100), map(loc.x, 0, width, 0, 100), map(loc.y, 0, height, 0, 100));
     //fill(map((unique_page_view / page_view), 0, 1, 0, 100), 100, 100);
    
@@ -133,6 +126,7 @@ class Boid {
     
     //stroke(map((unique_page_view / page_view), 0, 1, 0, 100), 100, 100);
     //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), map((unique_page_view / page_view), 0, 1, 1, 100));
+    // =======
     
     fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175, map((unique_page_view / page_view), 0, 1, 1, 255));
     stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175, map((unique_page_view / page_view), 0, 1, 1, 255));
@@ -141,18 +135,19 @@ class Boid {
     translate(loc.x,loc.y);
     rotate(theta);
     beginShape(TRIANGLES);
+    
+    // defaults
+    // =======
     //vertex(0, -r*2);
     //vertex(-r, r*2);
     //vertex(r, r*2);
-    
-    //vertex(0*4, -r*4);
-    //vertex(-r, r*4);
-    //vertex(r*4, r*4);
     
     vertex(0*map((page_view), 0, (int)max_page_view, 3, 10), -r*map((page_view), 0, (int)max_page_view, 3, 10));
     vertex(-r, r*map((page_view), 0, (int)max_page_view, 3, 10));
     vertex(r*map((page_view), 0, (int)max_page_view, 3, 10), r*map((page_view), 0, (int)max_page_view, 3, 10));
     
+    // Playing around with HSB colour mode
+    // =====================
     //vertex(0 * map(page_view, 1, 971, 4, 10), -r * map(page_view, 1, 971, 4, 10));
     //vertex(-r, r * map(page_view, 1, 971, 4, 10));
     //vertex(r * map(page_view, 1, 971, 4, 10), r * map(page_view, 1, 971, 4, 10));
