@@ -50,7 +50,7 @@ void setup() {
       max_u_page_views = unique_page_views;
     }
     
-    flock.addBoid(new Boid(random(0,width),random(0,height),int(unique_page_views)));
+    flock.addBoid(new Boid(random(0,width),random(0,height), int(page_views), int(unique_page_views)));
   }
   
   println( max_page_views + " max_page_views / " + max_u_page_views + " max_u_page_views" );
@@ -69,12 +69,12 @@ void setup() {
 
 void draw() {
 
-  background(255); 
+  background(255, 255, 255); 
   flock.run();
   drawScrollbars();
 
   if (mousePressed && !scrollbar) {
-    flock.addBoid(new Boid(mouseX,mouseY,4));
+    flock.addBoid(new Boid(mouseX,mouseY, 1, 1));
   }
 
 

@@ -22,15 +22,17 @@ class Boid {
   PVector vel;
   PVector acc;
   float r;
-  int size;
+  int page_view;
+  int unique_page_view;
 
   // canvas x, y, boid size
-  Boid(float x, float y, int s) {
+  Boid(float x, float y, int pv, int upv) {
     acc = new PVector(0,0);
     vel = new PVector(random(-1,1),random(-1,1));
     loc = new PVector(x,y);
     r = 2.0;
-    size = s;
+    page_view = pv;
+    unique_page_view = upv;
   }
 
   void run(ArrayList<Boid> boids) {
@@ -91,9 +93,28 @@ class Boid {
     float theta = vel.heading2D() + radians(90);
     //fill(175);
     
+    //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    ////stroke(0);
+    //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    
+    colorMode(HSB, 100);
+    //fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    //stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    
+    // map(min / max, 0, 1, 0, 255)
+    if(unique_page_view == 0){
+      unique_page_view = 1;
+    }
+    
+    if(page_view == 0){
+      page_view = 1;
+    }
+    
+    fill(map((unique_page_view / page_view), 0, 1, 0, 100), map(loc.x, 0, width, 0, 100), map(loc.y, 0, height, 0, 100));
+    
     fill(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
-    //stroke(0);
     stroke(map(loc.x, 0, width, 0, 255), map(loc.y, 0, height, 0, 255), 175);
+    
     pushMatrix();
     translate(loc.x,loc.y);
     rotate(theta);
@@ -105,9 +126,11 @@ class Boid {
     //vertex(-r, r*4);
     //vertex(r*4, r*4);
     
-    vertex(0 * map(size, 1, 971, 4, 10), -r * map(size, 1, 971, 4, 10));
-    vertex(-r, r * map(size, 1, 971, 4, 10));
-    vertex(r * map(size, 1, 971, 4, 10), r * map(size, 1, 971, 4, 10));
+    vertex(0 * map(page_view, 1, 971, 4, 10), -r * map(page_view, 1, 971, 4, 10));
+    vertex(-r, r * map(page_view, 1, 971, 4, 10));
+    vertex(r * map(page_view, 1, 971, 4, 10), r * map(page_view, 1, 971, 4, 10));
+    
+    colorMode(RGB, 100);
     
     endShape();
     popMatrix();
